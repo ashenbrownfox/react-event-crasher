@@ -26,11 +26,20 @@ export const Main = () => {
           dateTime: "2023-04-07T18:30:00",
           address: "789 Maple St, Anytown, USA",
           link: "https://example.com/event3"
-        }
+        },
+        {
+            id: 4,
+            name: "Top G Party",
+            desc: "Party in Dubai address TBD",
+            dateTime: "2023-04-07T18:30:00",
+            address: "67674 Maple St, Anytown, USA",
+            link: "https://example.com/event3"
+          }
       ];
       const today = new Date().toLocaleDateString();
 
       const [filterText, setFilterText] = useState("");
+      const [filterDate, setFilterDate] = useState("");
 
         const handleFilterChange = (event) => {
             setFilterText(event.target.value);
@@ -40,9 +49,21 @@ export const Main = () => {
               event.name.toLowerCase().includes(filterText.toLowerCase()) ||
               event.desc.toLowerCase().includes(filterText.toLowerCase())
           );
+          const handleDateChange = (event) => {
+            setFilterDate(event.target.value);
+          };
+          
       return (
         <main>
         <h2>Upcoming Events - {today}</h2>
+        <div className="filter-container">
+            <input
+                type="date"
+                value={filterDate}
+                onChange={handleDateChange}
+                className="date-picker"
+            />
+            </div>
         <div className='filter-input-container'>
         <input className="filter-input"
           type="text"
