@@ -37,3 +37,24 @@ main {
     font-size: 16px;
     margin-bottom: 8px;
   }
+
+  /* Filter input container */
+.filter-input-container {
+    margin-bottom: 16px; /* Add margin bottom for spacing */
+  }
+  
+  /* Filter input */
+  .filter-input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+  }
+  
+  /* Filter input focus */
+  .filter-input:focus {
+    outline: none;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }

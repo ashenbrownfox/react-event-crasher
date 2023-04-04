@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Main.css';
 
 export const Main = () => {
@@ -30,20 +30,39 @@ export const Main = () => {
       ];
       const today = new Date().toLocaleDateString();
 
+      const [filterText, setFilterText] = useState("");
+
+        const handleFilterChange = (event) => {
+            setFilterText(event.target.value);
+        };
+        const filteredEvents = events.filter(
+            (event) =>
+              event.name.toLowerCase().includes(filterText.toLowerCase()) ||
+              event.desc.toLowerCase().includes(filterText.toLowerCase())
+          );
       return (
         <main>
-          <h2>Upcoming Events {today}</h2>
-          <ul>
-            {events.map(event => (
-              <li key={event.id}>
-                <h3>{event.name}</h3>
-                <p>{event.desc}</p>
-                <p>{new Date(event.dateTime).toLocaleString()}</p>
-                <p>{event.address}</p>
-                <a href={event.link}>Event Details</a>
-              </li>
-            ))}
-          </ul>
-        </main>
+        <h2>Upcoming Events - {today}</h2>
+        <div className='filter-input-container'>
+        <input className="filter-input"
+          type="text"
+          placeholder="Filter events by name or description"
+          value={filterText}
+          onChange={handleFilterChange}
+        />
+        </div>
+        
+        <ul>
+          {filteredEvents.map((event) => (
+            <li key={event.id}>
+              <h3>{event.name}</h3>
+              <p>{event.desc}</p>
+              <p>{new Date(event.dateTime).toLocaleString()}</p>
+              <p>{event.address}</p>
+              <a href={event.link}>Event Details</a>
+            </li>
+          ))}
+        </ul>
+      </main>
       );
 }
