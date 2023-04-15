@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import './Main.css';
 
 export const Main = () => {
@@ -39,23 +39,29 @@ export const Main = () => {
       const today = new Date().toLocaleDateString();
 
       const [filterText, setFilterText] = useState("");
-      const [filterDate, setFilterDate] = useState("");
+      const [filterDate, setFilterDate] = useState(new Date().toLocaleDateString());
+      const [filteredEvents, setFilteredEvents] = useState(events);
 
         const handleFilterChange = (event) => {
             setFilterText(event.target.value);
         };
-        const filteredEvents = events.filter(
-            (event) =>
-              event.name.toLowerCase().includes(filterText.toLowerCase()) ||
-              event.desc.toLowerCase().includes(filterText.toLowerCase())
-          );
+        // Update filteredEvents whenever filterText or filterDate changes
+        useEffect(() => {
+            const filtered = events.filter(
+              (event) =>
+                event.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                event.desc.toLowerCase().includes(filterText.toLowerCase())
+            );
+            setFilteredEvents(filtered);
+          }, [filterText, filterDate]);
+
           const handleDateChange = (event) => {
             setFilterDate(event.target.value);
           };
           
       return (
         <main>
-        <h2>Upcoming Events - {today}</h2>
+        <h2> Events for {filterDate}</h2>
         <div className="filter-container">
             <input
                 type="date"
