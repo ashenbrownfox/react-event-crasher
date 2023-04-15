@@ -1,7 +1,8 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect } from 'react';
+import {Event} from './Event';
 import './Main.css';
 
-export const Main = () => {
+export const EventList = () => {
     const events = [
         {
           id: 1,
@@ -36,7 +37,6 @@ export const Main = () => {
             link: "https://example.com/event3"
           }
       ];
-      const today = new Date().toLocaleDateString();
 
       const [filterText, setFilterText] = useState("");
       const [filterDate, setFilterDate] = useState(new Date().toLocaleDateString());
@@ -53,10 +53,12 @@ export const Main = () => {
                 event.desc.toLowerCase().includes(filterText.toLowerCase())
             );
             setFilteredEvents(filtered);
-          }, [filterText, filterDate]);
+          }, [filterText, filterDate, events]);
 
           const handleDateChange = (event) => {
-            setFilterDate(event.target.value);
+            const date = new Date(event.target.value);
+            const formattedDate = date.toLocaleDateString('en-US', { month: 'numeric', day: '2-digit', year: 'numeric' });
+            setFilterDate(formattedDate);
           };
           
       return (
@@ -80,15 +82,9 @@ export const Main = () => {
         </div>
         
         <ul>
-          {filteredEvents.map((event) => (
-            <li key={event.id}>
-              <h3>{event.name}</h3>
-              <p>{event.desc}</p>
-              <p>{new Date(event.dateTime).toLocaleString()}</p>
-              <p>{event.address}</p>
-              <a href={event.link}>Event Details</a>
-            </li>
-          ))}
+        {filteredEvents.map((event) => (
+          <Event key={event.id} event={event} />
+        ))}
         </ul>
       </main>
       );
