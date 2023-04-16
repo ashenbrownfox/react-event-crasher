@@ -15,10 +15,17 @@ export const EventList = () => {
         // Update filteredEvents whenever filterText or filterDate changes
         useEffect(() => {
             const filtered = events.filter(
-              (event) =>
+              (event) => {
+              const eventDate = new Date(event.dateTime);
+              const filterDateObj = new Date(filterDate);
+              return (
                 event.name.toLowerCase().includes(filterText.toLowerCase()) ||
                 event.desc.toLowerCase().includes(filterText.toLowerCase())
-            );
+              ) && 
+              eventDate.getFullYear() === filterDateObj.getFullYear() &&
+              eventDate.getMonth() === filterDateObj.getMonth() &&
+              eventDate.getDate() === filterDateObj.getDate()
+            });
             setFilteredEvents(filtered);
           }, [filterText, filterDate, events]);
 
